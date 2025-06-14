@@ -1,0 +1,55 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="512" height="512" rx="100" fill="#FFF8DC"/>
+  
+  <!-- メインキャラクター（ことちゃん） -->
+  <!-- 顔 -->
+  <circle cx="256" cy="220" r="120" fill="#FFDBAC"/>
+  
+  <!-- 目 -->
+  <circle cx="220" cy="200" r="15" fill="#333"/>
+  <circle cx="292" cy="200" r="15" fill="#333"/>
+  <circle cx="223" cy="197" r="5" fill="#FFF"/>
+  <circle cx="295" cy="197" r="5" fill="#FFF"/>
+  
+  <!-- 口 -->
+  <path d="M 220 250 Q 256 280 292 250" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- ほっぺ -->
+  <circle cx="180" cy="230" r="12" fill="#FFB6C1" opacity="0.6"/>
+  <circle cx="332" cy="230" r="12" fill="#FFB6C1" opacity="0.6"/>
+  
+  <!-- 髪の毛 -->
+  <path d="M 136 180 Q 180 120 256 120 Q 332 120 376 180 Q 360 140 320 120 Q 280 100 256 100 Q 232 100 192 120 Q 152 140 136 180 Z" fill="#8B4513"/>
+  
+  <!-- 帽子（誕生日ハット） -->
+  <path d="M 200 140 L 256 60 L 312 140 Z" fill="#FF6B6B"/>
+  <circle cx="256" cy="60" r="8" fill="#FFD700"/>
+  <path d="M 200 140 Q 256 130 312 140" fill="#FFB6C1"/>
+  
+  <!-- 体 -->
+  <ellipse cx="256" cy="380" rx="80" ry="60" fill="#87CEEB"/>
+  
+  <!-- 手 -->
+  <circle cx="180" cy="360" r="25" fill="#FFDBAC"/>
+  <circle cx="332" cy="360" r="25" fill="#FFDBAC"/>
+  
+  <!-- 誕生日ケーキ（小さく） -->
+  <rect x="330" y="400" width="40" height="30" rx="5" fill="#DEB887"/>
+  <rect x="335" y="395" width="30" height="8" rx="3" fill="#FFB6C1"/>
+  <line x1="350" y1="395" x2="350" y2="385" stroke="#FF6B6B" stroke-width="2"/>
+  <circle cx="350" cy="383" r="3" fill="#FFD700"/>
+  
+  <!-- 音符 -->
+  <circle cx="80" cy="150" r="8" fill="#32CD32"/>
+  <path d="M 80 150 L 80 120 Q 85 115 90 120 L 90 142" stroke="#32CD32" stroke-width="3" fill="none"/>
+  
+  <!-- ハート -->
+  <path d="M 420 200 Q 430 190 440 200 Q 450 190 460 200 Q 460 220 440 240 Q 420 220 420 200 Z" fill="#FF69B4"/>
+  
+  <!-- 星 -->
+  <path d="M 100 400 L 105 415 L 120 415 L 108 425 L 113 440 L 100 430 L 87 440 L 92 425 L 80 415 L 95 415 Z" fill="#FFD700"/>
+  
+  <!-- アプリ名（ひらがな） -->
+  <text x="256" y="480" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#8B4513">ことちゃん</text>
+</svg>

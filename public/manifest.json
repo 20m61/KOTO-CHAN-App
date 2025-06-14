@@ -1,0 +1,78 @@
+{
+  "name": "ことちゃんバースデーアプリ",
+  "short_name": "ことちゃんアプリ",
+  "description": "ことちゃんの1歳の誕生日を祝う特別なアプリ。おとあそび、おえかき、アルバム機能付き",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF8DC",
+  "theme_color": "#FFB6C1",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "ja",
+  "categories": ["entertainment", "education", "kids"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "おとあそび",
+      "short_name": "音遊び",
+      "description": "動物や楽器の音を聞いて遊ぼう",
+      "url": "/sound-play",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "おえかき",
+      "short_name": "お絵かき",
+      "description": "自由にお絵かきを楽しもう",
+      "url": "/drawing",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "アルバム",
+      "short_name": "アルバム",
+      "description": "思い出の写真を見よう",
+      "url": "/album",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

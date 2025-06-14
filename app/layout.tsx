@@ -39,6 +39,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { PWAInstaller } from '@/components/ui/PWAInstaller';
+
 export default function RootLayout({
   children,
 }: {
@@ -58,6 +60,7 @@ export default function RootLayout({
       <body className={`${inter.className} h-full overflow-x-hidden`}>
         <div className="min-h-full">
           {children}
+          <PWAInstaller />
         </div>
       </body>
     </html>
