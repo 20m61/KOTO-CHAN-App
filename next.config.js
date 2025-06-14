@@ -45,11 +45,17 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   
+  // 無料デプロイ用の最適化
+  output: 'standalone',
+  
   // 画像最適化設定
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'vercel.app'],
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60,
+    // 無料プランでの制限に対応
+    deviceSizes: [640, 768, 1024, 1280],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   
   // ヘッダー設定
