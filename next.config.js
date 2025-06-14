@@ -45,8 +45,8 @@ const nextConfig = {
   reactStrictMode: true,
   // swcMinify is enabled by default in Next.js 15
   
-  // 無料デプロイ用の最適化
-  output: 'standalone',
+  // Vercelデプロイ用の最適化
+  // output: 'standalone', // Vercelでは不要
   
   // 画像最適化設定
   images: {
