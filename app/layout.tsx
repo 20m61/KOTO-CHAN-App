@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
@@ -7,13 +7,6 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'ことちゃんバースデーアプリ',
   description: 'ことちゃんの1歳の誕生日を祝う特別なアプリ',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
-  themeColor: '#FFB6C1',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
@@ -37,6 +30,14 @@ export const metadata: Metadata = {
       { url: '/apple-icon.png' },
     ],
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: '#FFB6C1',
 };
 
 import { PWAInstaller } from '@/components/ui/PWAInstaller';

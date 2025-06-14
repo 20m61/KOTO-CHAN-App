@@ -43,7 +43,7 @@ const securityHeaders = [
 
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  // swcMinify is enabled by default in Next.js 15
   
   // 無料デプロイ用の最適化
   output: 'standalone',
