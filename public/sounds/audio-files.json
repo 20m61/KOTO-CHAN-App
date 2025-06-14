@@ -1,0 +1,116 @@
+{
+  "animals": [
+    {
+      "id": "dog",
+      "name": "いぬ",
+      "file": "/sounds/animals/dog.mp3",
+      "description": "わんわん",
+      "duration": 1.5
+    },
+    {
+      "id": "cat", 
+      "name": "ねこ",
+      "file": "/sounds/animals/cat.mp3",
+      "description": "にゃーにゃー",
+      "duration": 1.5
+    },
+    {
+      "id": "bird",
+      "name": "とり", 
+      "file": "/sounds/animals/bird.mp3",
+      "description": "ちゅんちゅん",
+      "duration": 2.0
+    },
+    {
+      "id": "cow",
+      "name": "うし",
+      "file": "/sounds/animals/cow.mp3", 
+      "description": "もーもー",
+      "duration": 2.0
+    }
+  ],
+  "instruments": [
+    {
+      "id": "piano",
+      "name": "ピアノ",
+      "file": "/sounds/instruments/piano.mp3",
+      "description": "ポローン",
+      "duration": 2.0
+    },
+    {
+      "id": "drum",
+      "name": "たいこ",
+      "file": "/sounds/instruments/drum.mp3", 
+      "description": "ドンドン",
+      "duration": 1.0
+    },
+    {
+      "id": "bell",
+      "name": "すず",
+      "file": "/sounds/instruments/bell.mp3",
+      "description": "リンリン", 
+      "duration": 2.5
+    },
+    {
+      "id": "flute",
+      "name": "フルート",
+      "file": "/sounds/instruments/flute.mp3",
+      "description": "フワー",
+      "duration": 3.0
+    }
+  ],
+  "effects": [
+    {
+      "id": "pop",
+      "name": "ポップ",
+      "file": "/sounds/effects/pop.mp3",
+      "description": "ポップ音",
+      "duration": 0.5
+    },
+    {
+      "id": "swoosh", 
+      "name": "スウッシュ",
+      "file": "/sounds/effects/swoosh.mp3",
+      "description": "スウッシュ音",
+      "duration": 0.8
+    },
+    {
+      "id": "chime",
+      "name": "チャイム", 
+      "file": "/sounds/effects/chime.mp3",
+      "description": "チーン",
+      "duration": 1.5
+    },
+    {
+      "id": "laugh",
+      "name": "わらい",
+      "file": "/sounds/effects/laugh.mp3",
+      "description": "わはは",
+      "duration": 2.0
+    }
+  ],
+  "background": [
+    {
+      "id": "album-bgm",
+      "name": "アルバムBGM",
+      "file": "/sounds/background/album-bgm.mp3",
+      "description": "やさしい音楽",
+      "duration": 10.0,
+      "loop": true
+    },
+    {
+      "id": "birthday-greeting",
+      "name": "たんじょうびのうた",
+      "file": "/sounds/background/birthday-greeting.mp3", 
+      "description": "おめでとう",
+      "duration": 3.0
+    },
+    {
+      "id": "birthday-fanfare",
+      "name": "ファンファーレ",
+      "file": "/sounds/background/birthday-fanfare.mp3",
+      "description": "たんたんたーん",
+      "duration": 5.0
+    }
+  ]
+}

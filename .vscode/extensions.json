@@ -1,0 +1,17 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "ms-playwright.playwright",
+    "vitest.explorer",
+    "christian-kohler.path-intellisense",
+    "ms-vscode.vscode-typescript-next",
+    "formulahendry.auto-rename-tag",
+    "bradlc.vscode-tailwindcss",
+    "usernamehw.errorlens"
+  ],
+  "unwantedRecommendations": [
+    "ms-vscode.vscode-json"
+  ]
+}
