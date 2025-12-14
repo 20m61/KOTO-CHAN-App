@@ -7,14 +7,17 @@ import { cn } from '@/lib/utils/cn';
 export function DrawingCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [lastPoint, setLastPoint] = useState<{ x: number; y: number } | null>(null);
-  
-  const { 
-    currentColor, 
-    brushSize, 
-    history, 
-    addToHistory, 
-    currentHistoryIndex 
+  const [lastPoint, setLastPoint] = useState<{ x: number; y: number } | null>(
+    null
+  );
+  const initializedRef = useRef(false);
+
+  const {
+    currentColor,
+    brushSize,
+    history,
+    addToHistory,
+    currentHistoryIndex,
   } = useDrawingStore();
 
   // キャンバスの初期化
@@ -29,16 +32,32 @@ export function DrawingCanvas() {
     const resizeCanvas = () => {
       const rect = canvas.getBoundingClientRect();
       const devicePixelRatio = window.devicePixelRatio || 1;
-      
+
       canvas.width = rect.width * devicePixelRatio;
       canvas.height = rect.height * devicePixelRatio;
-      
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(devicePixelRatio, devicePixelRatio);
-      
-      // 白い背景
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, rect.width, rect.height);
-      
+
+      // 直前の履歴を描画
+      const { history: currentHistory, currentHistoryIndex: index } =
+        useDrawingStore.getState();
+      const snapshot = currentHistory[index];
+
+      if (snapshot) {
+        const img = new Image();
+        img.onload = () => {
+          ctx.clearRect(0, 0, rect.width, rect.height);
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, rect.width, rect.height);
+          ctx.drawImage(img, 0, 0, rect.width, rect.height);
+        };
+        img.src = snapshot;
+      } else {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, rect.width, rect.height);
+      }
+
       // 描画設定
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
@@ -56,84 +75,119 @@ export function DrawingCanvas() {
   // 履歴からキャンバスを復元
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || !history.length) return;
+    const ctx = canvas?.getContext('2d');
+
+    if (!canvas || !ctx) return;
+
+    const currentState = history[currentHistoryIndex];
+
+    if (!history.length || !currentState) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const displayWidth = canvas.width / (window.devicePixelRatio || 1);
+      const displayHeight = canvas.height / (window.devicePixelRatio || 1);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, displayWidth, displayHeight);
+      return;
+    }
+
+    const img = new Image();
+    img.onload = () => {
+      const displayWidth = canvas.width / (window.devicePixelRatio || 1);
+      const displayHeight = canvas.height / (window.devicePixelRatio || 1);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, displayWidth, displayHeight);
+      ctx.drawImage(img, 0, 0, displayWidth, displayHeight);
+    };
+    img.src = currentState;
+  }, [history, currentHistoryIndex]);
+
+  // 初回の白紙状態を履歴に保存
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || initializedRef.current) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const currentState = history[currentHistoryIndex];
-    if (currentState) {
-      const img = new Image();
-      img.onload = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0);
-      };
-      img.src = currentState;
-    }
-  }, [history, currentHistoryIndex]);
-
-  const getEventPoint = useCallback((event: React.TouchEvent | React.MouseEvent) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return null;
-
     const rect = canvas.getBoundingClientRect();
-    let clientX: number, clientY: number;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, rect.width, rect.height);
 
-    if ('touches' in event) {
-      if (event.touches.length === 0) return null;
-      clientX = event.touches[0].clientX;
-      clientY = event.touches[0].clientY;
-    } else {
-      clientX = event.clientX;
-      clientY = event.clientY;
-    }
+    addToHistory(canvas.toDataURL());
+    initializedRef.current = true;
+  }, [addToHistory]);
 
-    return {
-      x: clientX - rect.left,
-      y: clientY - rect.top,
-    };
-  }, []);
+  const getEventPoint = useCallback(
+    (event: React.TouchEvent | React.MouseEvent) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return null;
 
-  const startDrawing = useCallback((event: React.TouchEvent | React.MouseEvent) => {
-    event.preventDefault();
-    const point = getEventPoint(event);
-    if (!point) return;
+      const rect = canvas.getBoundingClientRect();
+      let clientX: number, clientY: number;
 
-    setIsDrawing(true);
-    setLastPoint(point);
+      if ('touches' in event) {
+        if (event.touches.length === 0) return null;
+        clientX = event.touches[0].clientX;
+        clientY = event.touches[0].clientY;
+      } else {
+        clientX = event.clientX;
+        clientY = event.clientY;
+      }
 
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    if (!ctx) return;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top,
+      };
+    },
+    []
+  );
 
-    ctx.strokeStyle = currentColor;
-    ctx.lineWidth = brushSize;
-    ctx.beginPath();
-    ctx.moveTo(point.x, point.y);
-  }, [getEventPoint, currentColor, brushSize]);
+  const startDrawing = useCallback(
+    (event: React.TouchEvent | React.MouseEvent) => {
+      event.preventDefault();
+      const point = getEventPoint(event);
+      if (!point) return;
 
-  const draw = useCallback((event: React.TouchEvent | React.MouseEvent) => {
-    if (!isDrawing) return;
-    
-    event.preventDefault();
-    const point = getEventPoint(event);
-    if (!point || !lastPoint) return;
+      setIsDrawing(true);
+      setLastPoint(point);
 
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    if (!ctx) return;
+      const canvas = canvasRef.current;
+      const ctx = canvas?.getContext('2d');
+      if (!ctx) return;
 
-    ctx.lineTo(point.x, point.y);
-    ctx.stroke();
-    
-    setLastPoint(point);
-  }, [isDrawing, lastPoint, getEventPoint]);
+      ctx.strokeStyle = currentColor;
+      ctx.lineWidth = brushSize;
+      ctx.beginPath();
+      ctx.moveTo(point.x, point.y);
+    },
+    [getEventPoint, currentColor, brushSize]
+  );
+
+  const draw = useCallback(
+    (event: React.TouchEvent | React.MouseEvent) => {
+      if (!isDrawing) return;
+
+      event.preventDefault();
+      const point = getEventPoint(event);
+      if (!point || !lastPoint) return;
+
+      const canvas = canvasRef.current;
+      const ctx = canvas?.getContext('2d');
+      if (!ctx) return;
+
+      ctx.lineTo(point.x, point.y);
+      ctx.stroke();
+
+      setLastPoint(point);
+    },
+    [isDrawing, lastPoint, getEventPoint]
+  );
 
   const stopDrawing = useCallback(() => {
     if (!isDrawing) return;
-    
+
     setIsDrawing(false);
     setLastPoint(null);
 
@@ -146,11 +200,13 @@ export function DrawingCanvas() {
   }, [isDrawing, addToHistory]);
 
   return (
-    <div className={cn(
-      "relative bg-white rounded-kotochan border-4 border-kotochan-brown/20",
-      "shadow-lg overflow-hidden",
-      "w-full max-w-2xl aspect-[4/3]"
-    )}>
+    <div
+      className={cn(
+        'relative bg-white rounded-kotochan border-4 border-kotochan-brown/20',
+        'shadow-lg overflow-hidden',
+        'w-full max-w-2xl aspect-[4/3]'
+      )}
+    >
       <canvas
         ref={canvasRef}
         className="w-full h-full cursor-crosshair touch-none"
@@ -163,7 +219,7 @@ export function DrawingCanvas() {
         onTouchEnd={stopDrawing}
         style={{ touchAction: 'none' }}
       />
-      
+
       {/* 描画中のインジケーター */}
       {isDrawing && (
         <div className="absolute top-2 right-2 bg-kotochan-pink text-white px-2 py-1 rounded-full text-xs">
