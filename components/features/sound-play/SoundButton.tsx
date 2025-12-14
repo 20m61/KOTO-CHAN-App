@@ -5,7 +5,7 @@ import { CircleButton } from '@/components/ui/CircleButton';
 import { Sparkles } from '@/components/ui/Sparkles';
 import { useSound } from '@/lib/hooks/useSound';
 import { type SoundItem } from '@/lib/constants/sounds';
-import { cn } from '@/utils/cn';
+import { cn } from '@/lib/utils/cn';
 
 interface SoundButtonProps {
   sound: SoundItem;
@@ -13,14 +13,21 @@ interface SoundButtonProps {
   className?: string;
 }
 
-const COLOR_MAP: Record<string, 'pink' | 'yellow' | 'mint' | 'blue' | 'orange' | 'purple' | 'brown'> = {
+const COLOR_MAP: Record<
+  string,
+  'pink' | 'yellow' | 'mint' | 'blue' | 'orange' | 'purple' | 'brown'
+> = {
   animals: 'pink',
   instruments: 'mint',
   effects: 'yellow',
-  background: 'blue'
+  background: 'blue',
 };
 
-export function SoundButton({ sound, size = 'large', className }: SoundButtonProps) {
+export function SoundButton({
+  sound,
+  size = 'large',
+  className,
+}: SoundButtonProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
   const { play, isLoading } = useSound(sound.file);
@@ -38,7 +45,7 @@ export function SoundButton({ sound, size = 'large', className }: SoundButtonPro
     } finally {
       // 音声の長さまたは最小表示時間の長い方だけボタンを押下状態にする
       const displayDuration = Math.max(sound.duration * 1000, 800);
-      
+
       setTimeout(() => {
         setIsPlaying(false);
       }, displayDuration);
@@ -52,29 +59,26 @@ export function SoundButton({ sound, size = 'large', className }: SoundButtonPro
   const buttonColor = COLOR_MAP[sound.category] || 'pink';
 
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn('relative', className)}>
       {showSparkles && (
-        <Sparkles
-          count={8}
-          className="absolute inset-0 pointer-events-none"
-        />
+        <Sparkles count={8} className="absolute inset-0 pointer-events-none" />
       )}
-      
+
       <CircleButton
         onClick={handlePlay}
         disabled={isPlaying || isLoading}
         color={buttonColor}
         size={size}
         className={cn(
-          "transition-all duration-200",
-          isPlaying && "scale-110 shadow-lg",
-          isLoading && "opacity-50 cursor-not-allowed"
+          'transition-all duration-200',
+          isPlaying && 'scale-110 shadow-lg',
+          isLoading && 'opacity-50 cursor-not-allowed'
         )}
       >
         <div className="flex flex-col items-center gap-2">
-          <span 
-            className="text-3xl sm:text-4xl" 
-            role="img" 
+          <span
+            className="text-3xl sm:text-4xl"
+            role="img"
             aria-label={sound.name}
           >
             {sound.category === 'animals' && '🐕'}
@@ -94,11 +98,11 @@ export function SoundButton({ sound, size = 'large', className }: SoundButtonPro
             {sound.id === 'success' && '🎉'}
             {sound.id === 'encourage' && '💪'}
           </span>
-          
+
           <span className="text-child-small font-bold text-center leading-tight">
             {sound.name}
           </span>
-          
+
           <span className="text-child-xs text-gray-600 text-center leading-tight">
             {sound.description}
           </span>
